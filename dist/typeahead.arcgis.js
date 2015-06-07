@@ -1,19 +1,23 @@
 (function() {
+
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   (function($) {
-    this.AddressPickerResult = (function() {
 
-      function AddressPickerResult(placeResult, fromReverseGeocoding) {
+    this.AutocompleteResult = (function() {
+
+      function AutocompleteResult(placeResult, fromReverseGeocoding) {
+
         this.placeResult = placeResult;
         this.fromReverseGeocoding = fromReverseGeocoding !== null ? fromReverseGeocoding : false;
         this.latitude = this.placeResult.geometry.location.lat();
         this.longitude = this.placeResult.geometry.location.lng();
+
       }
 
-      AddressPickerResult.prototype.addressTypes = function() {
+      AutocompleteResult.prototype.addressTypes = function() {
         var component, type, types, _i, _j, _len, _len1, _ref, _ref1;
         types = [];
         _ref = this.addressComponents();
@@ -30,15 +34,15 @@
         return types;
       };
 
-      AddressPickerResult.prototype.addressComponents = function() {
+      AutocompleteResult.prototype.addressComponents = function() {
         return this.placeResult.address_components || [];
       };
 
-      AddressPickerResult.prototype.address = function() {
+      AutocompleteResult.prototype.address = function() {
         return this.placeResult.formatted_address;
       };
 
-      AddressPickerResult.prototype.nameForType = function(type, shortName) {
+      AutocompleteResult.prototype.nameForType = function(type, shortName) {
         var component, _i, _len, _ref;
         if (shortName == null) {
           shortName = false;
@@ -53,37 +57,37 @@
         return null;
       };
 
-      AddressPickerResult.prototype.lat = function() {
+      AutocompleteResult.prototype.lat = function() {
         return this.latitude;
       };
 
-      AddressPickerResult.prototype.lng = function() {
+      AutocompleteResult.prototype.lng = function() {
         return this.longitude;
       };
 
-      AddressPickerResult.prototype.setLatLng = function(latitude, longitude) {
+      AutocompleteResult.prototype.setLatLng = function(latitude, longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
       };
 
-      AddressPickerResult.prototype.isAccurate = function() {
+      AutocompleteResult.prototype.isAccurate = function() {
         return !this.placeResult.geometry.viewport;
       };
 
-      AddressPickerResult.prototype.isReverseGeocoding = function() {
+      AutocompleteResult.prototype.isReverseGeocoding = function() {
         return this.fromReverseGeocoding;
       };
 
 
 
 
-      return AddressPickerResult;
+      return AutocompleteResult;
 
     })();
-    return this.AddressPicker = (function(_super) {
-      __extends(AddressPicker, _super);
+    return this.Autocomplete = (function(_super) {
+      __extends(Autocomplete, _super);
 
-      function AddressPicker(options) {
+      function Autocomplete(options) {
         if (options == null) {
           options = {};
         }
@@ -113,26 +117,30 @@
 
 
 
-        }, options);
+        },options);
 
 
-        AddressPicker.__super__.constructor.call(this, this.options);
+        Autocomplete.__super__.constructor.call(this, this.options);
         //this.placeService = new google.maps.places.PlacesService(document.createElement('div'));
       }
 
-      AddressPicker.prototype.bindDefaultTypeaheadEvent = function(typeahead) {
-
-        _this = this;
+      Autocomplete.prototype.bindDefaultTypeaheadEvent = function(typeahead) {
+        var _this = this;
 
         typeahead.on("typeahead:selected", function(obj, datum, dataset){
           console.log(datum);
           _this.geocode(datum.text, datum.magicKey);
         });
-        //return typeahead.bind("typeahead:cursorchanged", this.updateMap);
+
+        typeahead.on("typeahead:autocomplete", function(obj, datum, dataset){
+          console.log(datum);
+          _this.geocode(datum.text, datum.magicKey);
+        });
+
       };
 
 
-      AddressPicker.prototype.geocode = function(text,magicKey,location) {
+      Autocomplete.prototype.geocode = function(text,magicKey,location) {
 
         var url = 'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find';
         var jqxhr = $.ajax({
@@ -145,25 +153,26 @@
           dataType: 'json'
         })
         .done(function(data) {
+          console.log("done: ");
           console.log(data);
         })
         .fail(function(data) {
-          console.log(data);
+          console.log("fail: " + data);
         })
         .always(function(data) {
-          console.log(data);
+          console.log("always1: " + data);
         });
 
         // Set another completion function for the request above
         jqxhr.always(function(data) {
-          console.log(data);
+          //console.log("always2: " + data);
         });
       };
 
 
 
 
-      AddressPicker.prototype.reverseGeocode = function(position) {
+      Autocomplete.prototype.reverseGeocode = function(position) {
         if (this.geocoder == null) {
           this.geocoder = new google.maps.Geocoder();
         }
@@ -172,14 +181,14 @@
         }, (function(_this) {
           return function(results) {
             if (results && results.length > 0) {
-              _this.lastResult = new AddressPickerResult(results[0], true);
-              return $(_this).trigger('addresspicker:selected', _this.lastResult);
+              _this.lastResult = new AutocompleteResult(results[0], true);
+              return $(_this).trigger('Autocomplete:selected', _this.lastResult);
             }
           };
         })(this));
       };
 
-      return AddressPicker;
+      return Autocomplete;
 
     })(Bloodhound);
   })(jQuery);

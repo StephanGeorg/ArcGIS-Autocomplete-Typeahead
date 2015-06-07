@@ -15,19 +15,19 @@
 
 
     <script type="text/javascript">
-    var addressPicker = {};
+    var autocomplete = {};
 
-    $( function() {
+    $(function() {
 
-      addressPicker = new AddressPicker();
-      addressPicker.initialize();
+      autocomplete = new Autocomplete();
+      autocomplete.initialize();
 
       $('.example-Stations .typeahead').typeahead(null, {
         displayKey: 'text',
-        source: addressPicker.ttAdapter()
+        source: autocomplete.ttAdapter()
       });
 
-      addressPicker.bindDefaultTypeaheadEvent($('.example-Stations .typeahead'));
+      autocomplete.bindDefaultTypeaheadEvent($('.example-Stations .typeahead'));
 
     });
 
