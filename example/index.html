@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>typeahead.js – ArcGIS Geocoder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="example.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.5/typeahead.bundle.min.js"></script>
+
+    <script src="../dist/typeahead.arcgis.js"></script>
+
+
+    <script type="text/javascript">
+    var addressPicker = {};
+
+    $( function() {
+
+      addressPicker = new AddressPicker();
+      addressPicker.initialize();
+
+      $('.example-Stations .typeahead').typeahead(null, {
+        displayKey: 'text',
+        source: addressPicker.ttAdapter()
+      });
+
+      addressPicker.bindDefaultTypeaheadEvent($('.example-Stations .typeahead'));
+
+    });
+
+    </script>
+
+
+
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="title">Using Twitter typeahead.js with ArcGIS Online feature services </h1>
+      <div class="example example-Stations">
+        <div class="demo">
+          <input class="typeahead" name="input-stations" type="text" placeholder="City, Country, Address or POI">
+        </div>
+
+        <h4>Response</h4>
+        <pre class="response" id="response1">
+
+
+      </div>
+
+    </div>
+
+
+  </body>
+</html>
