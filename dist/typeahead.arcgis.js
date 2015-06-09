@@ -71,7 +71,7 @@
             }
           },
           limit: 3,
-          
+
         },options);
 
         Autocomplete.__super__.constructor.call(this, this.options);
@@ -87,6 +87,7 @@
         });
 
         typeahead.on("typeahead:autocompleted", function(obj, datum, dataset){
+          console.log(datum);
           _this.geocode(datum.text, datum.magicKey, success, fail);
         });
       };

@@ -1,23 +1,27 @@
 [
-    {
-      "text": "Berlin, Berlin, Deutschland (National Capital)",
-      "key": "value"
-
-    },
-    {
-      "text": "Berlin Mitte, Berlin, Deutschland",
-      "key": "value"
-    },
-    {
-      "text": "Berlin Schöneberg, Berlin, Deutschland",
-      "key": "value"
-    },
-    {
-      "text": "Berlin Steglitz Zehlendorf, Berlin, Deutschland",
-      "key": "value"
-    },
-    {
-      "text": "Berlin Pankow, Berlin, Deutschland",
-      "key": "value"
-    }
+  {
+    "text":"Berlin, Berlin, Deutschland (National Capital)",
+    "magicKey":"GST7YMc0AM9UOsE9HhFtGTyVGST7YMc0AM9UOsE9DbTVHgA9HhB0Zcp0OhNtGMytaikZQBNHUDxIQsxtIS9GOghnYnwZGPTq7iAm7Py_CR4PIic2BR4caocpOh9bZgKZQoc3YSyaagDIZhkZL1ydOh5Q1g10L1FF",
+    "isCollection":false
+  },
+  {
+    "text":"Berlin Mitte, Berlin, Deutschland",
+    "magicKey":"GST7YMc0AM9UOsE9HhFtGTyVGST7YMc0AM9UOsE9DbTVHgA9HhB0Zcp0OhNtGMytaikZQBNHM5NOUBNtIS9GOghnYnwZGPTq7iAm7Py_CR4PIic2BR4caocpOh9bZgKZQFc3YSyaagDIZhkZL1ydOh5Q1g10L1FF",
+    "isCollection":false
+  },
+  {
+    "text":"Berlin Pankow, Berlin, Deutschland",
+    "magicKey":"GST7YMc0AM9UOsE9HhFtGTyVGST7YMc0AM9UOsE9DbTVHgA9HhB0Zcp0OhNtGMytaikZQBNHM58KUDVtIS9GOghnYnwZGPTq7iAm7Py_CR4PIic2BR4caocpOh9bZgKZQ1c3YSyaagDIZhkZL1ydOh5Q1g10L1FF",
+    "isCollection":false
+  },
+  {
+    "text":"Berlin Schöneberg, Berlin, Deutschland",
+    "magicKey":"GST7YMc0AM9UOsE9HhFtGTyVGST7YMc0AM9UOsE9DbTVHgA9HhB0Zcp0OhNtGMytaikZQBNHM5kAUswtIS9GOghnYnwZGPTq7iAm7Py_CR4PIic2BR4caocpOh9bZgKZUNc3YSyaagDIZhkZL1ydOh5Q1g10L1FF",
+    "isCollection":false
+  },
+  {
+    "text":"Berlin Reinickendorf, Berlin, Deutschland",
+    "magicKey":"GST7YMc0AM9UOsE9HhFtGTyVGST7YMc0AM9UOsE9DbTVHgA9HhB0Zcp0OhNtGMytaikZQBNEMswJQB8tIS9GOghnYnwZGPTq7iAm7Py_CR4PIic2BR4caocpOh9bZgKZUoc3YSyaagDIZhkZL1ydOh5Q1g10L1FF",
+    "isCollection":false
+  }
 ]

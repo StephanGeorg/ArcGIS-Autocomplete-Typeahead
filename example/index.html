@@ -19,8 +19,12 @@
     var autocomplete = {};
 
     var success = function(data) {
+
       console.log("success");
       console.log(data);
+
+      $('#response1').text(JSON.stringify(data,null,2));
+
     }
 
     var fail = function(data) {
@@ -54,7 +58,7 @@
           hint: true,
           autoselect: true,
           highlight: true,
-          minLength: 1
+          gminLength: 1
         },
         {
           displayKey: 'text',

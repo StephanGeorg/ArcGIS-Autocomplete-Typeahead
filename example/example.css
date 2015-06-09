@@ -1,10 +1,6 @@
 /* custom font! */
 /* ------------ */
 
-@font-face {
-  font-family: Prociono;
-  src: url(../font/Prociono-Regular-webfont.ttf);
-}
 
 /* scaffolding */
 /* ----------- */
@@ -37,11 +33,14 @@ html {
 
 .title,
 .example-name {
-  font-family: Prociono;
 }
 
 p {
   margin: 0 0 10px 0;
+}
+
+pre {
+  text-align: left;
 }
 
 /* site theme */
