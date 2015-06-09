@@ -22,10 +22,23 @@
       autocomplete = new Autocomplete();
       autocomplete.initialize();
 
-      $('.example-Stations .typeahead').typeahead(null, {
-        displayKey: 'text',
-        source: autocomplete.ttAdapter()
+      at = new Autocomplete({
+        prefetch: 'example.json',
+        location: '13.4093,52.5221',
+        distance: 100000
       });
+      at.initialize();
+
+      $('.example-Stations .typeahead').typeahead(null,
+        {
+          displayKey: 'text',
+          source: at.ttAdapter()
+        },
+        {
+          displayKey: 'text',
+          source: autocomplete.ttAdapter()
+        }
+      );
 
       autocomplete.bindDefaultTypeaheadEvent($('.example-Stations .typeahead'));
 

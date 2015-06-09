@@ -6,102 +6,35 @@
 
   (function($) {
 
-    this.AutocompleteResult = (function() {
-
-      function AutocompleteResult(placeResult, fromReverseGeocoding) {
-
-        this.placeResult = placeResult;
-        this.fromReverseGeocoding = fromReverseGeocoding !== null ? fromReverseGeocoding : false;
-        this.latitude = this.placeResult.geometry.location.lat();
-        this.longitude = this.placeResult.geometry.location.lng();
-
-      }
-
-      AutocompleteResult.prototype.addressTypes = function() {
-        var component, type, types, _i, _j, _len, _len1, _ref, _ref1;
-        types = [];
-        _ref = this.addressComponents();
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          component = _ref[_i];
-          _ref1 = component.types;
-          for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-            type = _ref1[_j];
-            if (types.indexOf(type) === -1) {
-              types.push(type);
-            }
-          }
-        }
-        return types;
-      };
-
-      AutocompleteResult.prototype.addressComponents = function() {
-        return this.placeResult.address_components || [];
-      };
-
-      AutocompleteResult.prototype.address = function() {
-        return this.placeResult.formatted_address;
-      };
-
-      AutocompleteResult.prototype.nameForType = function(type, shortName) {
-        var component, _i, _len, _ref;
-        if (shortName == null) {
-          shortName = false;
-        }
-        _ref = this.addressComponents();
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          component = _ref[_i];
-          if (component.types.indexOf(type) !== -1) {
-            return (shortName ? component.short_name : component.long_name);
-          }
-        }
-        return null;
-      };
-
-      AutocompleteResult.prototype.lat = function() {
-        return this.latitude;
-      };
-
-      AutocompleteResult.prototype.lng = function() {
-        return this.longitude;
-      };
-
-      AutocompleteResult.prototype.setLatLng = function(latitude, longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-      };
-
-      AutocompleteResult.prototype.isAccurate = function() {
-        return !this.placeResult.geometry.viewport;
-      };
-
-      AutocompleteResult.prototype.isReverseGeocoding = function() {
-        return this.fromReverseGeocoding;
-      };
-
-
-
-
-      return AutocompleteResult;
-
-    })();
     return this.Autocomplete = (function(_super) {
       __extends(Autocomplete, _super);
 
       function Autocomplete(options) {
+
+        var url = 'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/suggest?text=%27%25%QUERY%25%27';
+
         if (options == null) {
           options = {};
         }
+        if(options.location) {
+          url = url + '&location=' + options.location;
+        }
+        if(options.distance && options.location) {
+          url = url + '&distance=' + options.distance;
+        }
+        if(options.format) {
+          url = url + '&f=' + options.format;
+        }
+        else url = url + '&f=json';
 
         this.options = $.extend({
-
 
           datumTokenizer: function (datum) {
             return Bloodhound.tokenizers.whitespace(datum.text);
           },
           queryTokenizer: Bloodhound.tokenizers.whitespace,
-          prefetch: 'example.json',
           remote: {
-            url: 'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/suggest?text=%27%25%QUERY%25%27&f=json&location=13.4093,52.5221&distance=100000',
+            url: url,
             wildcard: '%QUERY',
 
             filter: function (response) {
@@ -112,6 +45,12 @@
                 };
               });
             }
+          }
+
+          if(options.prefetch) {
+            this.options = $.extend({
+              prefetch: options.prefetch
+            });
           }
 
 
@@ -132,7 +71,7 @@
           _this.geocode(datum.text, datum.magicKey);
         });
 
-        typeahead.on("typeahead:autocomplete", function(obj, datum, dataset){
+        typeahead.on("typeahead:autocompleted", function(obj, datum, dataset){
           console.log(datum);
           _this.geocode(datum.text, datum.magicKey);
         });
@@ -148,7 +87,8 @@
           data: {
             text: text,
             f: 'json',
-            magicKey: magicKey
+            magicKey: magicKey,
+            outFields: '*'
           },
           dataType: 'json'
         })
