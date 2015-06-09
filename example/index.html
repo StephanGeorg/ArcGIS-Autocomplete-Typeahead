@@ -15,11 +15,27 @@
 
 
     <script type="text/javascript">
+
     var autocomplete = {};
+
+    var success = function(data) {
+      console.log("success");
+      console.log(data);
+    }
+
+    var fail = function(data) {
+      console.log("fail");
+      console.log(data);
+    }
 
     $(function() {
 
-      autocomplete = new Autocomplete();
+
+      // Define Data-Sources
+
+      autocomplete = new Autocomplete({
+
+      });
       autocomplete.initialize();
 
       at = new Autocomplete({
@@ -29,18 +45,43 @@
       });
       at.initialize();
 
-      $('.example-Stations .typeahead').typeahead(null,
+      // Initialize Typeahed
+
+      $('.example-Stations .typeahead').typeahead(
         {
-          displayKey: 'text',
-          source: at.ttAdapter()
+          highlight: true,
+          limit: 3,
+          hint: true,
+          autoselect: true,
+          highlight: true,
+          minLength: 1
         },
         {
           displayKey: 'text',
-          source: autocomplete.ttAdapter()
+          source: at.ttAdapter(),
+          templates: {
+              header: '<h3 class="league-name">Geolocation</h3>'
+          }
+        },
+        {
+          displayKey: 'text',
+          source: autocomplete.ttAdapter(),
+          templates: {
+              header: '<h3 class="league-name">Global</h3>'
+          },
+          limit: 3
         }
       );
 
-      autocomplete.bindDefaultTypeaheadEvent($('.example-Stations .typeahead'));
+      // Define Autocomplete Events
+
+      //at.bindDefaultTypeaheadEvent($('.example-Stations .typeahead'));
+      at.bindTypeaheadEvent($('.example-Stations .typeahead'),success,fail);
+
+
+
+
+
 
     });
 
@@ -58,7 +99,9 @@
         </div>
 
         <h4>Response</h4>
-        <pre class="response" id="response1">
+        <pre class="response" id="response1"></pre>
+
+
 
 
       </div>

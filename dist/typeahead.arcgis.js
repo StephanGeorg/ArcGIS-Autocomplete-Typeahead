@@ -6,6 +6,22 @@
 
   (function($) {
 
+    this.AutocompleteResult = (function() {
+
+      function AutocompleteResult(placeResult, fromReverseGeocoding) {
+
+
+      }
+
+
+
+      return AutocompleteResult;
+
+    })();
+
+
+
+
     return this.Autocomplete = (function(_super) {
       __extends(Autocomplete, _super);
 
@@ -13,19 +29,28 @@
 
         var url = 'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/suggest?text=%27%25%QUERY%25%27';
 
-        if (options == null) {
+        if (options === null) {
           options = {};
         }
         if(options.location) {
           url = url + '&location=' + options.location;
-        }
-        if(options.distance && options.location) {
-          url = url + '&distance=' + options.distance;
+          if(options.distance) {
+            url = url + '&distance=' + options.distance;
+          }
         }
         if(options.format) {
           url = url + '&f=' + options.format;
         }
         else url = url + '&f=json';
+        if(options.categories) {
+          url = url + '&category=' + options.categories;
+        }
+
+        if(options.prefetch) {
+          this.options = $.extend({
+            prefetch: options.prefetch
+          });
+        }
 
         this.options = $.extend({
 
@@ -36,50 +61,38 @@
           remote: {
             url: url,
             wildcard: '%QUERY',
-
             filter: function (response) {
               return $.map(response.suggestions, function (suggestion) {
                 return {
-                    text: suggestion.text,
-                    magicKey : suggestion.magicKey
+                  text: suggestion.text,
+                  magicKey : suggestion.magicKey
                 };
               });
             }
-          }
-
-          if(options.prefetch) {
-            this.options = $.extend({
-              prefetch: options.prefetch
-            });
-          }
-
-
-
-
+          },
+          limit: 3,
+          
         },options);
 
-
         Autocomplete.__super__.constructor.call(this, this.options);
-        //this.placeService = new google.maps.places.PlacesService(document.createElement('div'));
+
       }
 
-      Autocomplete.prototype.bindDefaultTypeaheadEvent = function(typeahead) {
-        var _this = this;
 
+      Autocomplete.prototype.bindTypeaheadEvent = function(typeahead, success, fail) {
+
+        var _this = this;
         typeahead.on("typeahead:selected", function(obj, datum, dataset){
-          console.log(datum);
-          _this.geocode(datum.text, datum.magicKey);
+          _this.geocode(datum.text, datum.magicKey, success, fail);
         });
 
         typeahead.on("typeahead:autocompleted", function(obj, datum, dataset){
-          console.log(datum);
-          _this.geocode(datum.text, datum.magicKey);
+          _this.geocode(datum.text, datum.magicKey, success, fail);
         });
-
       };
 
 
-      Autocomplete.prototype.geocode = function(text,magicKey,location) {
+      Autocomplete.prototype.geocode = function(text,magicKey,success,fail) {
 
         var url = 'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find';
         var jqxhr = $.ajax({
@@ -93,39 +106,25 @@
           dataType: 'json'
         })
         .done(function(data) {
-          console.log("done: ");
-          console.log(data);
+          if(typeof success === 'function') {
+            success(data);
+          }
         })
         .fail(function(data) {
-          console.log("fail: " + data);
+          if(typeof fail === 'function') {
+            fail(data);
+          }
         })
-        .always(function(data) {
-          console.log("always1: " + data);
-        });
+        .always(function(data) {});
 
-        // Set another completion function for the request above
-        jqxhr.always(function(data) {
-          //console.log("always2: " + data);
-        });
+        return false;
+
       };
 
 
 
 
       Autocomplete.prototype.reverseGeocode = function(position) {
-        if (this.geocoder == null) {
-          this.geocoder = new google.maps.Geocoder();
-        }
-        return this.geocoder.geocode({
-          location: position
-        }, (function(_this) {
-          return function(results) {
-            if (results && results.length > 0) {
-              _this.lastResult = new AutocompleteResult(results[0], true);
-              return $(_this).trigger('Autocomplete:selected', _this.lastResult);
-            }
-          };
-        })(this));
       };
 
       return Autocomplete;
