@@ -16,82 +16,64 @@
 
     <script type="text/javascript">
 
-    var autocomplete = {};
 
-    var success = function(data) {
+      var success = function(data) {
+        $('#response1').text(JSON.stringify(data,null,2));
+      }
 
-      console.log("success");
-      console.log(data);
+      var fail = function(data) {
+        console.log("fail");
+      }
 
-      $('#response1').text(JSON.stringify(data,null,2));
-
-    }
-
-    var fail = function(data) {
-      console.log("fail");
-      console.log(data);
-    }
-
-    $(function() {
+      $(function() {
 
 
-      // Define Data-Sources
+        // Define Data-Sources
 
-      autocomplete = new Autocomplete({
+        var autocomplete = new Autocomplete({});
+        autocomplete.initialize();
 
-      });
-      autocomplete.initialize();
+        var at = new Autocomplete({
+          prefetch: 'example.json',
+          location: '13.4093,52.5221',
+          distance: 100000
+        });
+        at.initialize();
 
-      at = new Autocomplete({
-        prefetch: 'example.json',
-        location: '13.4093,52.5221',
-        distance: 100000
-      });
-      at.initialize();
-
-      // Initialize Typeahed
-
-      $('.example-Stations .typeahead').typeahead(
-        {
-          highlight: true,
-          limit: 3,
-          hint: true,
-          autoselect: true,
-          highlight: true,
-          gminLength: 1
-        },
-        {
-          displayKey: 'text',
-          source: at.ttAdapter(),
-          templates: {
-              header: '<h3 class="league-name">Geolocation</h3>'
-          }
-        },
-        {
-          displayKey: 'text',
-          source: autocomplete.ttAdapter(),
-          templates: {
-              header: '<h3 class="league-name">Global</h3>'
+        // Initialize Typeahed
+        $('.example-Stations .typeahead').typeahead(
+          {
+            highlight: true,
+            limit: 3,
+            hint: true,
+            autoselect: true,
+            highlight: true,
+            minLength: 1
           },
-          limit: 3
-        }
-      );
+          {
+            displayKey: 'text',
+            source: at.ttAdapter(),
+            templates: {
+                header: '<h3 class="league-name">Geolocation</h3>'
+            }
+          },
+          {
+            displayKey: 'text',
+            source: autocomplete.ttAdapter(),
+            templates: {
+                header: '<h3 class="league-name">Global</h3>'
+            },
+            limit: 3
+          }
+        );
 
-      // Define Autocomplete Events
+        // Define Autocomplete Events
 
-      //at.bindDefaultTypeaheadEvent($('.example-Stations .typeahead'));
-      at.bindTypeaheadEvent($('.example-Stations .typeahead'),success,fail);
-
-
-
-
-
+        at.bindTypeaheadEvent($('.example-Stations .typeahead'),success,fail);
 
     });
 
     </script>
-
-
 
   </head>
   <body>
@@ -105,9 +87,6 @@
 
         <h4>Response</h4>
         <pre class="response" id="response1"></pre>
-
-
-
 
       </div>
 
