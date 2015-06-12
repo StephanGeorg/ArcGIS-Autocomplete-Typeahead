@@ -13,14 +13,9 @@
 
       }
 
-
-
       return AutocompleteResult;
 
     })();
-
-
-
 
     return this.Autocomplete = (function(_super) {
       __extends(Autocomplete, _super);
