@@ -6,4 +6,4 @@ This is a very early stage of a Google Place Autocomplete alternative.
 
 ## Example
 
-Check out the<a href="http://stephangeorg.github.io/ArcGIS-Autocomplete-Typeahead/example/" target="_new">example demo</a>.
+Check out the <a href="http://stephangeorg.github.io/ArcGIS-Autocomplete-Typeahead/example/" target="_new">example demo</a>.
