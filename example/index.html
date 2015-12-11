@@ -30,13 +30,16 @@
 
         // Define Data-Sources
 
-        var autocomplete = new Autocomplete({});
+        var autocomplete = new Autocomplete({
+          category: 'Address'
+        });
         autocomplete.initialize();
 
         var at = new Autocomplete({
           prefetch: 'example.json',
           location: '13.4093,52.5221',
-          distance: 100000
+          distance: 100000,
+          category: 'Address'
         });
         at.initialize();
 
@@ -63,7 +66,7 @@
             templates: {
                 header: '<h3 class="league-name">Global</h3>'
             },
-            limit: 3
+            limit: 5
           }
         );
 
