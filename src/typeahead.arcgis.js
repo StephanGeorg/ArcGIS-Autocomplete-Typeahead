@@ -22,7 +22,7 @@
 
       function Autocomplete(options) {
 
-        var url = 'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/suggest?text=%27%25%QUERY%25%27';
+        var url = 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/suggest?text=%QUERY';
 
         if (options === null) {
           options = {};
@@ -65,7 +65,7 @@
               });
             }
           },
-          limit: 3,
+          //limit: 10,
 
         },options);
 
@@ -90,7 +90,7 @@
 
       Autocomplete.prototype.geocode = function(text,magicKey,success,fail) {
 
-        var url = 'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find';
+        var url = 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find';
         var jqxhr = $.ajax({
           url: url,
           data: {
