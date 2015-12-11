@@ -1,7 +1,7 @@
 # ArcGIS-Autocomplete-Typeahead
 
-Plugin for Twitter Typeahead.js to use ArcGIS Geocoder Suggest. Inspired by <a href="https://github.com/sgruhier/typeahead-addresspicker" target="_new">typeahead-addresspicker</a>.
+Plugin for <a href="https://github.com/twitter/typeahead.js">Twitter Typeahead.js</a> to use ArcGIS Geocoder Suggest. Inspired by <a href="https://github.com/sgruhier/typeahead-addresspicker" target="_new">typeahead-addresspicker</a>. This is a very early stage of a Google Place Autocomplete alternative.
 
-This is a very early stage of a Google Place Autocomplete alternative.
+## Example
 
-<a href="http://stephangeorg.github.io/ArcGIS-Autocomplete-Typeahead/example/" target="_new">Check out Demo</a>
+Check out the <a href="http://stephangeorg.github.io/ArcGIS-Autocomplete-Typeahead/example/" target="_new">example demo</a>.
